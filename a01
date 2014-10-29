@@ -1,0 +1,82 @@
+1.1 旋转字符串
+题目描述
+给定一个字符串，要求把字符串前面的若干个字符移动到字符串的尾部，如把字符串“abcdef”前面的2个字符'a'和'b'移动到字符串的尾部，使得原字符串变成字符串“cdefab”。请写一个函数完成此功能，要求对长度为n的字符串操作的时间复杂度为 O(n)，空间复杂度为 O(1)。
+
+Java描述
+1. 暴力移位法
+package com.luo.c01;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class RotateString {
+public void LeftShiftOne(char[] s, int n) {
+char t=s[0];
+for (int i = 1; i < n; i++) {
+s[i-1]=s[i];
+}
+s[n-1]=t;
+}
+public void LeftRotateString(char []s,int n,int m){
+while(m-->0){
+LeftShiftOne(s, n);
+}
+}
+public static void main(String[] args) {
+RotateString rs=new RotateString();
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+System.out.println("Please input a String:");
+try {
+String str=br.readLine();
+int num=str.length();
+char[] s=new char[num];
+s=str.toCharArray();
+System.out.println("Please input the k number:");
+int k=br.read();
+
+        rs.LeftRotateString(s,s.length,k);
+        System.out.println("The Rotated string is:");
+        System.out.println(s);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+}
+}
+
+2.三步反转法
+package com.luo.c01;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class StringRotate {
+public void ReverseString(char[] s, int from, int to) {
+while (from < to) {
+char t = s[from];
+s[from++] = s[to];
+s[to--] = t;
+}
+}
+
+public void LeftRotateString(char[] s, int n, int m) {
+    m %= n;
+    ReverseString(s, 0, m - 1);
+    ReverseString(s, m, n - 1);
+    ReverseString(s, 0, n - 1);
+}
+
+public static void main(String[] args) throws IOException {
+    StringRotate sr=new StringRotate();
+    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+    System.out.println("Please input the string you want to rotate:");
+    char[] s=br.readLine().toCharArray();
+    System.out.println("Please input the number of k:");
+    int k=br.read();
+    sr.LeftRotateString(s, s.length, k);
+    System.out.println("The rotated string:");
+    System.out.println(s);
+}
+}
